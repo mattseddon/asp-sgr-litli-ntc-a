@@ -1,17 +1,29 @@
 # asp-sgr-litli-ntc-a
 
+The CLI in this repository (`lia`) can generate new AI agents and post AI-generated slop directly to LinkedIn from your command line.
+
+## Background
+
 Have you, like me, been spending too much time on LinkedIn lately?
 
 Are you sick of reading posts about:
  - The impending extinction of all developers?
- - Vibes are replacing skills?
+ - Vibes replacing skills?
  - LLMs-based coding assistants being **ALL** anyone will need to deliver production-ready code at hyper-speed?
 
 After a couple of months of reading about my impending doom, I realized I could beat all these influencers to the punch by replacing **THEM** with AI agents.
 
 Introducing the AI slop pushing, sigma grindset riding, LinkedIn thought leader influencing, non-technical CEO agent or `asp-sgr-litli-ntc-a` for short.
 
-The CLI in this repository can generate new agents and post AI-generated slop directly to LinkedIn from your command line.
+## Example Posts
+<img width="463" alt="Screenshot 2025-06-03 at 11 58 43 am" src="https://github.com/user-attachments/assets/f6f7cf08-b325-40fc-95c6-8d354ec3ad28" />
+
+<br/>
+<img width="462" alt="Screenshot 2025-06-03 at 11 42 50 am" src="https://github.com/user-attachments/assets/9b85e7da-1c27-4262-a0f5-7ee6e2ee33f2" />
+<br/>
+<img width="461" alt="Screenshot 2025-06-03 at 12 56 15 pm" src="https://github.com/user-attachments/assets/2c054049-aa7f-4f69-8768-533b7a82c865" />
+<br/>
+<img width="465" alt="Screenshot 2025-06-03 at 12 25 02 pm" src="https://github.com/user-attachments/assets/27317f17-7850-4498-83cb-54ad9e7e61f1" />
 
 ## Usage
 
@@ -25,7 +37,7 @@ The CLI in this repository can generate new agents and post AI-generated slop di
 - Run the CLI to generate LinkedIn posts (`lia --post "why you’ll never get caught apologising for driving your team and company so hard."`)
 
 
-### Creating a LinkedIn account for your agent
+#### Creating a LinkedIn account for your agent
 
 - First setup an email account for the agent (e.g. new gmail account).
 - Next, setup the LinkedIn account using that email.
@@ -33,15 +45,6 @@ The CLI in this repository can generate new agents and post AI-generated slop di
 - Now create an app for the LinkedIn account (at https://www.linkedin.com/developers/apps).
 - Under the "Auth" tab use the `OAuth 2.0 tools` link to generate a new access token.
 
-### Example Posts
-<img width="463" alt="Screenshot 2025-06-03 at 11 58 43 am" src="https://github.com/user-attachments/assets/f6f7cf08-b325-40fc-95c6-8d354ec3ad28" />
-
-<br/>
-<img width="462" alt="Screenshot 2025-06-03 at 11 42 50 am" src="https://github.com/user-attachments/assets/9b85e7da-1c27-4262-a0f5-7ee6e2ee33f2" />
-<br/>
-<img width="461" alt="Screenshot 2025-06-03 at 12 56 15 pm" src="https://github.com/user-attachments/assets/2c054049-aa7f-4f69-8768-533b7a82c865" />
-<br/>
-<img width="465" alt="Screenshot 2025-06-03 at 12 25 02 pm" src="https://github.com/user-attachments/assets/27317f17-7850-4498-83cb-54ad9e7e61f1" />
 
 
 ### Disclaimer
