@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "asp-sgr-litli-ntc-a"
-description = "AI slop pushing, sigma grindset riding, LinkedIn thought leader influencing, non-technical CEO agent."
+description = "AI slop pushing, sigma grindset riding, LinkedIn thought leader influencer, non-technical CEO agent."
 readme = "README.md"
 license = {text = "Apache-2.0"}
 authors = [{name = "Matt Seddon", email = "mattseddon@hotmail.com"}]

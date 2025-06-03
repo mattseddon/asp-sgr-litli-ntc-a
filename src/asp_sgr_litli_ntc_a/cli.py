@@ -119,7 +119,7 @@ def _set_token(token: str):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="AI slop pushing, sigma grindset riding, LinkedIn thought leader influencing, non-technical CEO agent."
+        description="AI slop pushing, sigma grindset riding, LinkedIn thought leader influencer, non-technical CEO agent."
     )
     parser.add_argument(
         "--gen", action="store_true", default=False, help="Generate a new agent."

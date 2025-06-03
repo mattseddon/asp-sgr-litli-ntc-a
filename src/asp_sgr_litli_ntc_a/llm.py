@@ -1,6 +1,6 @@
 from ollama import generate
 
-CEO_DETAILS = "AI slop pushing, sigma grindset riding, LinkedIn thought leader influencing, non-technical CEO"
+CEO_DETAILS = "AI slop pushing, sigma grindset riding, LinkedIn thought leader influencer, non-technical CEO"
 
 
 def _generate(prompt: str) -> str:

@@ -13,7 +13,7 @@ Are you sick of reading posts about:
 
 After a couple of months of reading about my impending doom, I realized I could beat all these influencers to the punch by replacing **THEM** with AI agents.
 
-Introducing the AI slop pushing, sigma grindset riding, LinkedIn thought leader influencing, non-technical CEO agent or `asp-sgr-litli-ntc-a` for short.
+Introducing the AI slop pushing, sigma grindset riding, LinkedIn thought leader influencer, non-technical CEO agent or `asp-sgr-litli-ntc-a` for short.
 
 ## Example Posts
 <img width="463" alt="Screenshot 2025-06-03 at 11 58 43 am" src="https://github.com/user-attachments/assets/f6f7cf08-b325-40fc-95c6-8d354ec3ad28" />
@@ -29,7 +29,7 @@ Introducing the AI slop pushing, sigma grindset riding, LinkedIn thought leader 
 
 - Create a virtual environment and install the CLI (`uv venv .env && source .env/bin/activate && uv pip install "."`).
 - Make sure Ollama is installed and running (see https://ollama.com/ for details).
-- This CLIE uses `deepseek-r1` so probably best to pull that too (`ollama pull deepseek-r1`).
+- This CLI uses `deepseek-r1` so probably best to pull that too (`ollama pull deepseek-r1`).
 - Run the CLI to generate a new agent (`lia --gen`).
 - Agent details will now be available in the generated `.config` file.
 - Create a LinkedIn profile and generate an access_token.
@@ -39,12 +39,11 @@ Introducing the AI slop pushing, sigma grindset riding, LinkedIn thought leader 
 
 #### Creating a LinkedIn account for your agent
 
-- First setup an email account for the agent (e.g. new gmail account).
+- First setup an email account for the agent (e.g. a new gmail account).
 - Next, setup the LinkedIn account using that email.
-- At this point you can use an LLM to generate your profile picture and any bio sections that you want to fill out.
+- At this point you can use an LLM to generate your profile picture and any sections that you want to fill out.
 - Now create an app for the LinkedIn account (at https://www.linkedin.com/developers/apps).
 - Under the "Auth" tab use the `OAuth 2.0 tools` link to generate a new access token.
-
 
 
 ### Disclaimer
