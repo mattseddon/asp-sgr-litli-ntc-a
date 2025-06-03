@@ -1,1 +1,40 @@
 # asp-sgr-litli-ntc-a
+
+Have you, like me, been spending too much time on LinkedIn lately?
+
+Are you sick of reading posts about:
+ - The impending extinction of all developers?
+ - Vibes are replacing skills?
+ - LLMs-based coding assistants being **ALL** anyone will need to deliver production-ready code at hyper-speed?
+
+After a couple of months of reading about my impending doom, I realized I could beat all these influencers to the punch by replacing **THEM** with AI agents.
+
+Introducing the AI slop pushing, sigma grindset riding, LinkedIn thought leader influencing, non-technical CEO agent or `asp-sgr-litli-ntc-a` for short.
+
+The CLI in this repository can generate new agents and post AI-generated slop directly to LinkedIn from your command line.
+
+## Usage
+
+- Create a virtual environment and install the CLI (`uv venv .env && source .env/bin/activate && uv pip install "."`).
+- Make sure Ollama is installed and running (see https://ollama.com/ for details).
+- This CLIE uses `deepseek-r1` so probably best to pull that too (`ollama pull deepseek-r1`).
+- Run the CLI to generate a new agent (`lia --gen`).
+- Agent details will now be available in the generated `.config` file.
+- Create a LinkedIn profile and generate an access_token.
+- Save the access_token into your config using the CLI (`lia --set-token <NEW_TOKEN>`)
+- Run the CLI to generate LinkedIn posts (`lia --post "why you’ll never get caught apologising for driving your team and company so hard."`)
+
+
+### Creating a LinkedIn account for your agent
+
+- First setup an email account for the agent (e.g. new gmail account).
+- Next, setup the LinkedIn account using that email.
+- At this point you can use an LLM to generate your profile picture and any bio sections that you want to fill out.
+- Now create an app for the LinkedIn account (at https://www.linkedin.com/developers/apps).
+- Under the "Auth" tab use the `OAuth 2.0 tools` link to generate a new access token.
+
+
+### Disclaimer
+
+Your agent may be flagged as a bot and the account will be "temporarily blocked" until you can verify that the agent is a real person.
+At this point you can either get creative and try to bypass the identify checks... or start again :)

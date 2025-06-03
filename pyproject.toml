@@ -1,0 +1,67 @@
+[build-system]
+requires = ["setuptools>=48", "setuptools_scm[toml]>=6.3.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "asp-sgr-litli-ntc-a"
+description = "AI slop pushing, sigma grindset riding, LinkedIn thought leader influencing, non-technical CEO agent."
+readme = "README.md"
+license = {text = "Apache-2.0"}
+authors = [{name = "Matt Seddon", email = "mattseddon@hotmail.com"}]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Development Status :: 2 - Pre-Alpha"
+]
+requires-python = ">=3.9"
+dynamic = ["version"]
+dependencies = [
+  "linkedin-api-client>=0.3.0",
+  "ollama>=0.5.1",
+  "rich>=14.0.0"
+]
+
+[project.scripts]
+lia = "asp_sgr_litli_ntc_a.cli:main"
+
+[project.optional-dependencies]
+dev = [
+  "mypy==1.16.0"
+]
+
+[project.urls]
+Documentation = "https://github.com/mattseddon/asp-sgr-litli-ntc-a"
+Issues = "https://github.com/mattseddon/asp-sgr-litli-ntc-a/issues"
+Source = "https://github.com/mattseddon/asp-sgr-litli-ntc-a"
+
+[tool.setuptools_scm]
+
+[tool.pytest.ini_options]
+addopts = "-rfEs"
+
+[tool.mypy]
+files = ["src", "tests"]
+ignore_missing_imports = true
+
+[tool.codespell]
+ignore-words-list = " "
+
+[tool.ruff]
+show-fixes = true
+
+[tool.ruff.lint]
+preview = true
+explicit-preview-rules = true
+
+[tool.ruff.lint.flake8-type-checking]
+strict = true
+
+[tool.ruff.lint.mccabe]
+max-complexity = 15
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
