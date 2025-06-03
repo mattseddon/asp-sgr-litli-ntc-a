@@ -33,6 +33,16 @@ The CLI in this repository can generate new agents and post AI-generated slop di
 - Now create an app for the LinkedIn account (at https://www.linkedin.com/developers/apps).
 - Under the "Auth" tab use the `OAuth 2.0 tools` link to generate a new access token.
 
+### Example Posts
+<img width="463" alt="Screenshot 2025-06-03 at 11 58 43 am" src="https://github.com/user-attachments/assets/f6f7cf08-b325-40fc-95c6-8d354ec3ad28" />
+
+<br/>
+<img width="462" alt="Screenshot 2025-06-03 at 11 42 50 am" src="https://github.com/user-attachments/assets/9b85e7da-1c27-4262-a0f5-7ee6e2ee33f2" />
+<br/>
+<img width="461" alt="Screenshot 2025-06-03 at 12 56 15 pm" src="https://github.com/user-attachments/assets/2c054049-aa7f-4f69-8768-533b7a82c865" />
+<br/>
+<img width="465" alt="Screenshot 2025-06-03 at 12 25 02 pm" src="https://github.com/user-attachments/assets/27317f17-7850-4498-83cb-54ad9e7e61f1" />
+
 
 ### Disclaimer
 
