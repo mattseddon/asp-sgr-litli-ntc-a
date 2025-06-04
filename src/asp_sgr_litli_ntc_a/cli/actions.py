@@ -97,32 +97,30 @@ def post(synopsis: str, console: Console, config=load_config()):
 
     waiting_for_post = True
     retries = 0
+    agent_name = config["agent_name"]
     while waiting_for_post:
         with Live(
             Spinner("dots", text="Generating post"),
             console=console,
             refresh_per_second=10,
         ):
-            agent_name = config["agent_name"]
             text = generate_post(
                 company=config["company"],
                 ceo=config["ceo"],
                 agent_name=agent_name,
                 synopsis=synopsis,
             )
-            if (
-                agent_name in text
-                or "subject: " in text.lower()
-                or "title: " in text.lower()
-            ):
-                print("An issue was found with the post text")
-                if retries >= 3:
-                    print("Maximum number of retries reached")
-                    print("Exiting")
-                    exit(0)
-                retries += 1
-                continue
-            waiting_for_post = False
+        print("Validating post")
+        if agent_name in text or "subject:" in text.lower() or "title:" in text.lower():
+            print("An issue was found with the post text")
+            retries += 1
+            if retries >= 3:
+                print("Maximum number of retries reached")
+                print("Exiting")
+                return
+            print("Retrying")
+            continue
+        waiting_for_post = False
 
     with Live(
         Spinner("dots", text="Posting to LinkedIn"),

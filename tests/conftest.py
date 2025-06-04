@@ -4,20 +4,22 @@ from types import SimpleNamespace
 
 from asp_sgr_litli_ntc_a.defaults import DEFAULTS
 
+LLM_REASONING_TEXT = "<think>I pretend that I am thinking \n</think>\n"
+
 
 @pytest.fixture
-def mock_llm_response_after_thinking():
+def mock_llm_post_reasoning_response():
     return "Then I send you some garbage"
 
 
+def generate_ollama_response(text: str) -> SimpleNamespace:
+    return SimpleNamespace({"response": f"{LLM_REASONING_TEXT}{text}"})
+
+
 @pytest.fixture
-def mock_ollama_generate(mocker, mock_llm_response_after_thinking):
+def mock_ollama_generate(mocker, mock_llm_post_reasoning_response):
     mock_generate = mocker.patch("asp_sgr_litli_ntc_a.llm.generate")
-    mock_response = SimpleNamespace(
-        {
-            "response": f"<think>I pretend that I am thinking \n</think>\n{mock_llm_response_after_thinking}",
-        }
-    )
+    mock_response = generate_ollama_response(mock_llm_post_reasoning_response)
 
     mock_generate.return_value = mock_response
     yield mock_generate
