@@ -10,7 +10,7 @@ from ..linked_in import send_post
 from ..llm import generate_agent, generate_company, generate_post
 
 
-def gen_agent(console: Console, config=load_config()):
+def gen(console: Console, config=load_config()):
     print("In order to generate a new agent we need to ask a few questions...")
 
     existing_token = config.get("access_token")

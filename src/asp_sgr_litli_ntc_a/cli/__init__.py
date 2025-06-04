@@ -1,7 +1,7 @@
 import argparse
 from rich.console import Console
 
-from .actions import gen_agent, post, set_token
+from .actions import gen, post, set_token
 
 
 def main():
@@ -27,7 +27,7 @@ def main():
     args = parser.parse_args()
 
     if args.gen:
-        gen_agent(console)
+        gen(console)
 
     if args.set_token:
         set_token(args.token)
