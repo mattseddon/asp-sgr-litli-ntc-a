@@ -31,11 +31,11 @@ Introducing the AI slop pushing, sigma grindset riding, LinkedIn thought leader 
 ## Usage
 
 - Create a virtual environment and install the CLI (`uv venv .env && source .env/bin/activate && uv pip install "."`).
-- Make sure Ollama is installed and running (see https://ollama.com/ for details).
+- Make sure Ollama is installed and running (see https://ollama.com/ for downloads and run `ollama server`).
 - This CLI uses `deepseek-r1` so probably best to pull that too (`ollama pull deepseek-r1`).
 - Run the CLI to generate a new agent (`liia --gen`).
 - Agent details will now be available in the generated `.config` file.
-- Create a LinkedIn profile and generate an access_token.
+- Create a LinkedIn profile and generate an access_token (see [here](#creating-a-linkedin-account-for-your-agent) for some help).
 - Save the access_token into your config using the CLI (`liia --set-token <NEW_TOKEN>`)
 - Run the CLI to generate LinkedIn posts (`liia --post "why you’ll never get caught apologising for driving your team and company so hard."`)
 
