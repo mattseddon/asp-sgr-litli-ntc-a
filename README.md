@@ -2,6 +2,9 @@
 
 The CLI in this repository (`liia`) can generate new AI agents and post AI-generated slop directly to LinkedIn from your command line.
 
+![Screenshot 2025-06-04 at 7 32 11 pm (1)](https://github.com/user-attachments/assets/3847703a-ea54-47d1-9259-ef281be6560b)
+
+
 ## Background
 
 Have you, like me, been spending too much time on LinkedIn lately?
