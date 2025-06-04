@@ -10,10 +10,10 @@ from ..linked_in import send_post
 from ..llm import generate_agent, generate_company, generate_post
 
 
-def gen_agent(console: Console):
+def gen_agent(console: Console, config=load_config()):
     print("In order to generate a new agent we need to ask a few questions...")
 
-    existing_token = load_config().get("access_token")
+    existing_token = config.get("access_token")
 
     skip = Prompt.ask(
         "Would you like to use the provided defaults?",
@@ -85,9 +85,7 @@ def gen_agent(console: Console):
     write_config(config)
 
 
-def post(synopsis: str, console: Console):
-    config = load_config()
-
+def post(synopsis: str, console: Console, config=load_config()):
     if not config:
         print("Cannot generate posts without an agent config")
         print("Please run liia --gen to generate one")
@@ -134,7 +132,6 @@ def post(synopsis: str, console: Console):
         send_post(access_token=config["access_token"], text=text)
 
 
-def set_token(token: str):
-    config = load_config()
+def set_token(token: str, config=load_config()):
     config["access_token"] = token
     write_config(config)

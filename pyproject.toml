@@ -32,6 +32,11 @@ liia = "asp_sgr_litli_ntc_a.cli:main"
 dev = [
   "mypy==1.16.0"
 ]
+tests = [
+  "pytest>=8,<9",
+  "pytest-sugar>=0.9.6",
+  "pytest-mock>=3.14.1"
+]
 
 [project.urls]
 Documentation = "https://github.com/mattseddon/asp-sgr-litli-ntc-a"
