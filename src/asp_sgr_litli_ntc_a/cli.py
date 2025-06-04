@@ -93,6 +93,15 @@ def _gen_agent(console: Console):
 def _post(synopsis: str, console: Console):
     config = load_config()
 
+    if not config:
+        print("Cannot generate posts without an agent config")
+        print("Please run liia --gen to generate one")
+
+    if not config["access_token"]:
+        print("Cannot post to LinkedIn without an access token.")
+        print("See README for details on how to obtain one.")
+        return
+
     with Live(
         Spinner("dots", text="Generating post"), console=console, refresh_per_second=10
     ):
