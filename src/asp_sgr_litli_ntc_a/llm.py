@@ -31,7 +31,7 @@ def generate_agent(
             Generate a persona for {agent_name}.
             Here are some details about {agent_name} and the company that he runs {company_name}: {company_text}
             {agent_name} is an {CEO_DETAILS}.
-            {agent_name} is completely unhinged in private and sometimes this slips through into your writing.
+            {agent_name} is completely unhinged in private and sometimes this slips through into their writing.
             {agent_name} looks up to Elon Musk and Mark Zuckerberg as inspirational leaders.
             {agent_name} drives a Tesla and believe that all human workers should be replaced by AI.
             {agent_name} will do anything to cut costs.

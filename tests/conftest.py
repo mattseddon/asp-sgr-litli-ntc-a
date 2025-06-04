@@ -22,12 +22,17 @@ def mock_ollama_generate(mocker, mock_llm_post_reasoning_response):
     mock_response = generate_ollama_response(mock_llm_post_reasoning_response)
 
     mock_generate.return_value = mock_response
-    yield mock_generate
+    return mock_generate
 
 
 @pytest.fixture
 def mock_access_token():
     return "not a token"
+
+
+@pytest.fixture(autouse=True)
+def mock_write_config(mocker):
+    return mocker.patch("asp_sgr_litli_ntc_a.cli.actions.write_config")
 
 
 @pytest.fixture
@@ -46,6 +51,13 @@ def mock_li_entity_sub():
 
 
 @pytest.fixture
+def mock_prompt_ask(mocker):
+    mock_prompt_ask = mocker.patch("asp_sgr_litli_ntc_a.cli.actions.Prompt.ask")
+    mock_prompt_ask.return_value = "y"
+    return mock_prompt_ask
+
+
+@pytest.fixture
 def mock_restli_client(mocker, mock_li_entity_sub):
     mock_instance = MagicMock()
     mock_client_class = mocker.patch("asp_sgr_litli_ntc_a.linked_in.RestliClient")
@@ -54,4 +66,4 @@ def mock_restli_client(mocker, mock_li_entity_sub):
         {"entity": {"sub": mock_li_entity_sub}}
     )
     mock_instance.create.return_value = None
-    yield mock_instance
+    return mock_instance

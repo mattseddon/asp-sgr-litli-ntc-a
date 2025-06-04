@@ -1,7 +1,81 @@
 from rich.console import Console
 
 from asp_sgr_litli_ntc_a.cli import post
+from asp_sgr_litli_ntc_a.cli.actions import gen
+from asp_sgr_litli_ntc_a.defaults import DEFAULTS
 from tests.conftest import generate_ollama_response
+
+
+def test_gen_skip(
+    mock_ollama_generate,
+    mock_prompt_ask,
+    mock_llm_post_reasoning_response,
+    mock_write_config,
+):
+    mock_config = {}
+    gen(Console(), mock_config)
+    assert mock_prompt_ask.call_count == 1
+    assert mock_write_config.call_count == 1
+    mock_write_config.assert_called_once_with(
+        {
+            **DEFAULTS,
+            "ceo": mock_llm_post_reasoning_response,
+            "company": mock_llm_post_reasoning_response,
+        }
+    )
+
+
+def test_gen_no_blat_token(
+    mock_ollama_generate,
+    mock_prompt_ask,
+    mock_llm_post_reasoning_response,
+    mock_write_config,
+    mock_access_token,
+):
+    mock_config = {"access_token": mock_access_token}
+    gen(Console(), mock_config)
+    assert mock_prompt_ask.call_count == 1
+    assert mock_write_config.call_count == 1
+    mock_write_config.assert_called_once_with(
+        {
+            **DEFAULTS,
+            "access_token": mock_access_token,
+            "ceo": mock_llm_post_reasoning_response,
+            "company": mock_llm_post_reasoning_response,
+        }
+    )
+
+
+def test_gen(
+    mock_ollama_generate,
+    mock_prompt_ask,
+    mock_llm_post_reasoning_response,
+    mock_write_config,
+    mock_access_token,
+):
+    expected_config = {
+        "agent_name": "Dave",
+        "agent_details": "definitely a sociopath",
+        "company_name": "Slopfest inc",
+        "company_details": "The newest and bestest Adtech company in the VC game",
+    }
+
+    mock_prompt_ask.side_effect = ["n", *expected_config.values()]
+    mock_config = {
+        **DEFAULTS,
+        "ceo": "something, something darkside CEO",
+        "company": "builds death stars",
+    }
+    gen(Console(), mock_config)
+    assert mock_prompt_ask.call_count == 5
+    assert mock_write_config.call_count == 1
+    mock_write_config.assert_called_once_with(
+        {
+            **expected_config,
+            "ceo": mock_llm_post_reasoning_response,
+            "company": mock_llm_post_reasoning_response,
+        }
+    )
 
 
 def test_post(

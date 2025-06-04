@@ -21,7 +21,7 @@ def gen(console: Console, config=load_config()):
         choices=["y", "n"],
     )
     if skip == "y":
-        config = DEFAULTS
+        config = {**DEFAULTS}
 
     else:
         agent_name = Prompt.ask(
