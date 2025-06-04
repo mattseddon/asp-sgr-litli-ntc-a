@@ -2,19 +2,40 @@ from unittest.mock import MagicMock
 import pytest
 from types import SimpleNamespace
 
+from asp_sgr_litli_ntc_a.defaults import DEFAULTS
+
 
 @pytest.fixture
-def mock_ollama_generate(mocker):
+def mock_llm_response_after_thinking():
+    return "Then I send you some garbage"
+
+
+@pytest.fixture
+def mock_ollama_generate(mocker, mock_llm_response_after_thinking):
     mock_generate = mocker.patch("asp_sgr_litli_ntc_a.llm.generate")
-    # Default response structure
     mock_response = SimpleNamespace(
         {
-            "response": "<think>I pretend that I am thinking \n</think>\nThen I send you some garbage",
+            "response": f"<think>I pretend that I am thinking \n</think>\n{mock_llm_response_after_thinking}",
         }
     )
 
     mock_generate.return_value = mock_response
     yield mock_generate
+
+
+@pytest.fixture
+def mock_access_token():
+    return "not a token"
+
+
+@pytest.fixture
+def mock_config(mock_access_token):
+    return {
+        **DEFAULTS,
+        "company": "AI slop generated company details",
+        "ceo": "AI slop generated company details",
+        "access_token": mock_access_token,
+    }
 
 
 @pytest.fixture
