@@ -45,7 +45,7 @@ def test_post_retry(
 ):
     mock_ollama_generate.side_effect = [
         generate_ollama_response(
-            f"Okay here is a post by {mock_config['agent_name']}."
+            f"Okay here is a post by {mock_config['agent_name']}..."
         ),
         generate_ollama_response("**Subject: Let's get SLOPPY**"),
         generate_ollama_response("**Title:** SLOPTASTIC"),

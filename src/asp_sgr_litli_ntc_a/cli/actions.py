@@ -85,6 +85,14 @@ def gen_agent(console: Console, config=load_config()):
     write_config(config)
 
 
+def _is_post_valid(agent_name: str, text: str) -> bool:
+    return (
+        agent_name not in text
+        and "subject:" not in text.lower()
+        and "title:" not in text.lower()
+    )
+
+
 def post(synopsis: str, console: Console, config=load_config()):
     if not config:
         print("Cannot generate posts without an agent config")
@@ -95,10 +103,8 @@ def post(synopsis: str, console: Console, config=load_config()):
         print("See README for details on how to obtain one")
         return
 
-    waiting_for_post = True
-    retries = 0
     agent_name = config["agent_name"]
-    while waiting_for_post:
+    for retries in range(3):
         with Live(
             Spinner("dots", text="Generating post"),
             console=console,
@@ -110,17 +116,16 @@ def post(synopsis: str, console: Console, config=load_config()):
                 agent_name=agent_name,
                 synopsis=synopsis,
             )
-        print("Validating post")
-        if agent_name in text or "subject:" in text.lower() or "title:" in text.lower():
-            print("An issue was found with the post text")
-            retries += 1
-            if retries >= 3:
-                print("Maximum number of retries reached")
-                print("Exiting")
-                return
-            print("Retrying")
-            continue
-        waiting_for_post = False
+
+        if _is_post_valid(agent_name, text):
+            break
+
+        if retries == 2:
+            print("Maximum number of retries reached - exiting")
+            print("")
+            return
+
+        print("An issue was found with the post text - retrying")
 
     with Live(
         Spinner("dots", text="Posting to LinkedIn"),
