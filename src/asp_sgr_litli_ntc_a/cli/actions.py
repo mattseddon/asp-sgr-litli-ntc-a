@@ -10,53 +10,60 @@ from ..linked_in import send_post
 from ..llm import generate_agent, generate_company, generate_post
 
 
-def gen(console: Console, config=load_config()):
+def _prompt_user_for_config(existing_config: dict[str, str], console: Console):
     print("In order to generate a new agent we need to ask a few questions...")
 
-    existing_token = config.get("access_token")
+    existing_token = existing_config.get("access_token")
+    config = {"access_token": existing_token} if existing_config else {}
 
     skip = Prompt.ask(
         "Would you like to use the provided defaults?",
         show_choices=True,
+        console=console,
         choices=["y", "n"],
     )
+
     if skip == "y":
-        config = {**DEFAULTS}
+        return {**config, **DEFAULTS}
 
-    else:
-        agent_name = Prompt.ask(
-            "1. What name would you like to give the agent?",
-            show_default=True,
-            default=DEFAULTS["agent_name"],
-        )
-        agent_details = Prompt.ask(
-            "2. Any additional information about the agent?",
-            show_default=True,
-            default="No",
-        )
-        company_name = Prompt.ask(
-            "3. What name would you like to give the agent's company",
-            show_default=True,
-            default=DEFAULTS["company_name"],
-        )
-        company_details = Prompt.ask(
-            '4. Give a brief description of the SaaS startup company your agent "runs": ',
-            show_default=True,
-            default=DEFAULTS["company_details"],
-        )
+    agent_name = Prompt.ask(
+        "1. What name would you like to give the agent?",
+        show_default=True,
+        console=console,
+        default=DEFAULTS["agent_name"],
+    )
+    agent_details = Prompt.ask(
+        "2. Any additional information about the agent?",
+        show_default=True,
+        console=console,
+        default="No",
+    )
+    company_name = Prompt.ask(
+        "3. What name would you like to give the agent's company",
+        show_default=True,
+        console=console,
+        default=DEFAULTS["company_name"],
+    )
+    company_details = Prompt.ask(
+        '4. Give a brief description of the SaaS startup company your agent "runs": ',
+        show_default=True,
+        console=console,
+        default=DEFAULTS["company_details"],
+    )
 
-        config = {
-            "agent_name": agent_name,
-            "company_name": company_name,
-            "company_details": company_details,
-        }
+    config = {
+        "agent_name": agent_name,
+        "company_name": company_name,
+        "company_details": company_details,
+    }
 
-        if agent_details and agent_details != "No":
-            config["agent_details"] = agent_details
+    if agent_details and agent_details != "No":
+        config["agent_details"] = agent_details
 
-    if existing_token:
-        config["access_token"] = existing_token
+    return config
 
+
+def _prompt_llm_for_config(config: dict[str, str], console: Console) -> dict[str, str]:
     with Live(
         Spinner("dots", text="Generating company"),
         console=console,
@@ -81,7 +88,12 @@ def gen(console: Console, config=load_config()):
         )
 
     config["ceo"] = ceo_text
+    return config
 
+
+def gen(console: Console, existing_config=load_config()):
+    config_from_user = _prompt_user_for_config(existing_config, console)
+    config = _prompt_llm_for_config(config_from_user, console)
     write_config(config)
 
 
@@ -93,16 +105,9 @@ def _is_post_valid(agent_name: str, text: str) -> bool:
     )
 
 
-def post(synopsis: str, console: Console, config=load_config()):
-    if not config:
-        print("Cannot generate posts without an agent config")
-        print("Please run liia --gen to generate one")
-
-    if not config["access_token"]:
-        print("Cannot post to LinkedIn without an access token")
-        print("See README for details on how to obtain one")
-        return
-
+def _gen_valid_post(
+    synopsis: str, config: dict[str, str], console: Console
+) -> str | None:
     agent_name = config["agent_name"]
     for retries in range(3):
         with Live(
@@ -117,15 +122,28 @@ def post(synopsis: str, console: Console, config=load_config()):
                 synopsis=synopsis,
             )
 
-        if _is_post_valid(agent_name, text):
-            break
-
-        if retries == 2:
-            print("Maximum number of retries reached - exiting")
-            print("")
-            return
+            if _is_post_valid(agent_name, text):
+                return text
 
         print("An issue was found with the post text - retrying")
+
+    return None
+
+
+def post(synopsis: str, console: Console, config=load_config()):
+    if not config:
+        print("Cannot generate posts without an agent config")
+        print("Please run liia --gen to generate one")
+        return
+
+    if not config["access_token"]:
+        print("Cannot post to LinkedIn without an access token")
+        print("See README for details on how to obtain one")
+        return
+
+    if not (text := _gen_valid_post(synopsis, config, console)):
+        print("Maximum number of retries reached - exiting")
+        return
 
     with Live(
         Spinner("dots", text="Posting to LinkedIn"),
