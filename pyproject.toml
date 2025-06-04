@@ -26,7 +26,7 @@ dependencies = [
 ]
 
 [project.scripts]
-lia = "asp_sgr_litli_ntc_a.cli:main"
+liia = "asp_sgr_litli_ntc_a.cli:main"
 
 [project.optional-dependencies]
 dev = [
