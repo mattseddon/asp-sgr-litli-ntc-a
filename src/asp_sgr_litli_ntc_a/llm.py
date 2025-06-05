@@ -1,3 +1,4 @@
+from typing import Union
 from ollama import generate
 
 CEO_DETAILS = "AI slop pushing, sigma grindset riding, LinkedIn thought leader influencer, non-technical CEO"
@@ -25,7 +26,10 @@ def generate_company(agent_name: str, company_name: str, company_details: str) -
 
 
 def generate_agent(
-    agent_name: str, agent_details: str | None, company_name: str, company_text: str
+    agent_name: str,
+    agent_details: Union[str, None],
+    company_name: str,
+    company_text: str,
 ) -> str:
     prompt = f"""
             Generate a persona for {agent_name}.

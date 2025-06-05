@@ -1,3 +1,5 @@
+[![tests](https://github.com/mattseddon/asp-sgr-litli-ntc-a/actions/workflows/tests.yml/badge.svg)](https://github.com/mattseddon/asp-sgr-litli-ntc-a/actions/workflows/tests.yml)
+
 # asp-sgr-litli-ntc-a
 
 The CLI in this repository (`liia`) can generate new AI agents and post AI-generated slop directly to LinkedIn from your command line.

@@ -1,3 +1,4 @@
+from typing import Union
 from rich.console import Console
 from rich.live import Live
 from rich.prompt import Prompt
@@ -107,7 +108,7 @@ def _is_post_valid(agent_name: str, text: str) -> bool:
 
 def _gen_valid_post(
     synopsis: str, config: dict[str, str], console: Console
-) -> str | None:
+) -> Union[str, None]:
     agent_name = config["agent_name"]
     for retries in range(3):
         with Live(

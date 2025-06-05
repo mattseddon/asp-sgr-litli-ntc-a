@@ -1,0 +1,98 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+env:
+  FORCE_COLOR: "1"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.ref }}
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-suffix: lint
+          cache-dependency-glob: pyproject.toml
+
+      - name: Install nox
+        run: uv pip install nox --system
+
+      - name: Cache mypy
+        uses: actions/cache@v4
+        with:
+          path: .mypy_cache
+          key: mypy-${{ runner.os }}-${{ env.pythonLocation }}-${{ hashFiles('pyproject.toml') }}
+
+      - name: Cache pre-commit hooks
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-3|${{ env.pythonLocation }}|${{ hashFiles('.pre-commit-config.yaml') }}
+
+      - name: Lint code
+        run: nox -s lint
+
+
+  test:
+    needs: lint
+    timeout-minutes: 10
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        pyv: ['3.9', '3.13']
+        include:
+          - os: ubuntu-latest
+            pyv: '3.10'
+          - os: ubuntu-latest
+            pyv: '3.11'
+          - os: ubuntu-latest
+            pyv: '3.12'
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.ref }}
+
+      - name: Set up Python ${{ matrix.pyv }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.pyv }}
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-suffix: tests-${{ matrix.pyv }}
+          cache-dependency-glob: pyproject.toml
+
+      - name: Install nox
+        run: uv pip install nox --system
+
+      - name: Run tests
+        run: nox -s tests-${{ matrix.pyv }}
+        shell: bash
