@@ -14,7 +14,12 @@ def main():
     parser.add_argument(
         "--post",
         metavar="SYNOPSIS",
-        help="Provide a synopsis of a post to generate a new LinkedIn post using your agent.",
+        help="Provide a synopsis to generate more slop to post to LinkedIn.",
+    )
+    parser.add_argument(
+        "--preview",
+        action="store_true",
+        help="Combine with --post to preview the generated post. An access token is not required for a preview.",
     )
     parser.add_argument(
         "--set-token",
@@ -26,6 +31,9 @@ def main():
 
     args = parser.parse_args()
 
+    if args.preview and not args.post:
+        print("--preview requires --post to be passed.")
+
     if args.gen:
         gen(console)
 
@@ -33,4 +41,4 @@ def main():
         set_token(args.token)
 
     if args.post:
-        post(args.post, console)
+        post(args.post, args.preview, console)

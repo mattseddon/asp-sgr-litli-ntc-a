@@ -130,13 +130,19 @@ def _gen_valid_post(
     return None
 
 
-def post(synopsis: str, console: Console, config=load_config()):
-    if not config:
+def post(synopsis: str, preview: bool, console: Console, config=load_config()):
+    if (not config) and preview:
+        gen(console, config)
+        config = load_config()
+
+    if not (config or preview):
         print("Cannot generate posts without an agent config")
         print("Please run liia --gen to generate one")
         return
 
-    if not config["access_token"]:
+    access_token = config.get("access_token")
+
+    if not (access_token or preview):
         print("Cannot post to LinkedIn without an access token")
         print("See README for details on how to obtain one")
         return
@@ -144,6 +150,23 @@ def post(synopsis: str, console: Console, config=load_config()):
     if not (text := _gen_valid_post(synopsis, config, console)):
         print("Maximum number of retries reached - exiting")
         return
+
+    if preview:
+        print("Preview:")
+        print()
+        print(text)
+        print()
+        if not access_token:
+            return
+
+        send_to_linked_in = Prompt.ask(
+            "Would you like to post this to LinkedIn?",
+            show_choices=True,
+            console=console,
+            choices=["y", "n"],
+        )
+        if send_to_linked_in == "n":
+            return
 
     with Live(
         Spinner("dots", text="Posting to LinkedIn"),

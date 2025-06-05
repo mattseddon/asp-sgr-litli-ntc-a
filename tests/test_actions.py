@@ -89,6 +89,7 @@ def test_post(
     console = Console()
     post(
         "a fun time we had",
+        False,
         console,
         mock_config,
     )
@@ -126,8 +127,44 @@ def test_post_retry(
     ]
     post(
         "a fun time we had",
+        False,
         Console(),
         mock_config,
     )
+    assert mock_ollama_generate.call_count == 3
+    assert mock_restli_client.create.call_count == 0
+
+
+def test_post_preview(
+    mock_ollama_generate, mock_restli_client, mock_prompt_ask, mock_config
+):
+    mock_prompt_ask.return_value = "n"
+    post(
+        "a preview post",
+        True,
+        Console(),
+        mock_config,
+    )
+    assert mock_ollama_generate.call_count == 1
+    assert mock_restli_client.create.call_count == 0
+
+
+def test_post_preview_no_config(
+    mock_ollama_generate,
+    mock_prompt_ask,
+    mock_restli_client,
+    mock_config_no_token,
+    mock_load_config,
+    mock_write_config,
+):
+    mock_prompt_ask.return_value = "y"
+    mock_load_config.return_value = {**mock_config_no_token}
+    post(
+        "a preview post which calls gen",
+        True,
+        Console(),
+        {},
+    )
+    assert mock_write_config.call_count == 1
     assert mock_ollama_generate.call_count == 3
     assert mock_restli_client.create.call_count == 0

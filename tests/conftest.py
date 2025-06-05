@@ -36,11 +36,23 @@ def mock_write_config(mocker):
 
 
 @pytest.fixture
-def mock_config(mock_access_token):
+def mock_load_config(mocker):
+    return mocker.patch("asp_sgr_litli_ntc_a.cli.actions.load_config")
+
+
+@pytest.fixture
+def mock_config_no_token():
     return {
         **DEFAULTS,
         "company": "AI slop generated company details",
         "ceo": "AI slop generated company details",
+    }
+
+
+@pytest.fixture
+def mock_config(mock_config_no_token, mock_access_token):
+    return {
+        **mock_config_no_token,
         "access_token": mock_access_token,
     }
 

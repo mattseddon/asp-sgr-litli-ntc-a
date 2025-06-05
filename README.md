@@ -39,6 +39,8 @@ Introducing the AI slop pushing, sigma grindset riding, LinkedIn thought leader 
 - Save the access_token into your config using the CLI (`liia --set-token <NEW_TOKEN>`)
 - Run the CLI to generate LinkedIn posts (`liia --post "why you’ll never get caught apologising for driving your team and company so hard."`)
 
+**Note:** `liia --post <SYNOPSIS> --preview` can be used to generate a preview post without running `liia --gen` and/or `liia --set-token <NEW_TOKEN>`.
+
 
 #### Creating a LinkedIn account for your agent
 
