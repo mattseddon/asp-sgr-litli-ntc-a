@@ -12,7 +12,7 @@ from ..llm import generate_agent, generate_company, generate_post
 
 
 def _prompt_user_for_config(existing_config: dict[str, str], console: Console):
-    print("In order to generate a new agent we need to ask a few questions...")
+    console.print("In order to generate a new agent we need to ask a few questions...")
 
     existing_token = existing_config.get("access_token")
     config = {"access_token": existing_token} if existing_config else {}
@@ -126,7 +126,9 @@ def _gen_valid_post(
             if _is_post_valid(agent_name, text):
                 return text
 
-        print("An issue was found with the post text - retrying")
+        console.print(
+            f"An issue was found with the post text\n[bold]Retrying[/bold] ({retries + 1})"
+        )
 
     return None
 
@@ -137,26 +139,24 @@ def post(synopsis: str, preview: bool, console: Console, config=load_config()):
         config = load_config()
 
     if not (config or preview):
-        print("Cannot generate posts without an agent config")
-        print("Please run liia --gen to generate one")
+        console.print("Cannot generate posts without an agent config")
+        console.print("Please run [bold]liia --gen[/bold] to generate one")
         return
 
     access_token = config.get("access_token")
 
     if not (access_token or preview):
-        print("Cannot post to LinkedIn without an access token")
-        print("See README for details on how to obtain one")
+        console.print("Cannot post to LinkedIn without an access token")
+        console.print("See README for details on how to obtain one")
         return
 
     if not (text := _gen_valid_post(synopsis, config, console)):
-        print("Maximum number of retries reached - exiting")
+        console.print("Maximum number of retries reached")
         return
 
     if preview:
-        print("Preview:")
-        print()
-        print(text)
-        print()
+        console.print("[bold]Preview:[/bold]", end="\n---\n")
+        console.print(text, end="\n---\n")
         if not access_token:
             return
 

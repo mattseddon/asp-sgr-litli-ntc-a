@@ -32,7 +32,7 @@ def main():
     args = parser.parse_args()
 
     if args.preview and not args.post:
-        print("--preview requires --post to be passed.")
+        console.print("--preview requires --post to be passed.")
 
     if args.gen:
         gen(console)
